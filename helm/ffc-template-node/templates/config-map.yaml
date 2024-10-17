@@ -1,5 +1,5 @@
-{{- include "ffc-helm-library.container-config-map" (list . "ffc-template-node.config-map") -}}
-{{- define "ffc-template-node.config-map" -}}
+{{- include "ffc-helm-library.container-config-map" (list . "ai-fcp-techspike-python.config-map") -}}
+{{- define "ai-fcp-techspike-python.config-map" -}}
 data:
   NODE_ENV: {{ .Values.environment | quote }}
   PORT: {{ .Values.container.port | quote }}

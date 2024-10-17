@@ -1,32 +1,66 @@
-ARG PARENT_VERSION=2.3.0-node20.15.0
+ARG PYTHON_VERSION=3.12.4
 ARG PORT=3000
-ARG PORT_DEBUG=9229
 
 # Development
-FROM defradigital/node-development:${PARENT_VERSION} AS development
-ARG PARENT_VERSION
-LABEL uk.gov.defra.ffc.parent-image=defradigital/node-development:${PARENT_VERSION}
+FROM python:${PYTHON_VERSION}-slim as development
 
-ARG PORT
-ARG PORT_DEBUG
-ENV PORT=${PORT}
-EXPOSE ${PORT} ${PORT_DEBUG}
+ENV PYTHONDONTWRITEBYTECODE=1
 
-COPY --chown=node:node package*.json ./
-RUN npm install
-COPY --chown=node:node . .
-CMD [ "npm", "run", "start:watch" ]
+ENV PYTHONUNBUFFERED=1
 
-# Production
-FROM defradigital/node:${PARENT_VERSION} AS production
-ARG PARENT_VERSION
-LABEL uk.gov.defra.ffc.parent-image=defradigital/node:${PARENT_VERSION}
+WORKDIR /app
 
-ARG PORT
-ENV PORT=${PORT}
+ARG UID=10001
+RUN adduser \
+  --disabled-password \
+  --gecos "" \
+  --home "/nonexistent" \
+  --shell "/sbin/nologin" \
+  --no-create-home \
+  --uid "${UID}" \
+  appuser
+
+COPY ./requirements.txt /app/requirements.txt
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+  --mount=type=bind,source=requirements.txt,target=/app/requirements.txt \
+  python -m pip install -r /app/requirements.txt
+
+USER appuser
+
+COPY ./src /app/src
 EXPOSE ${PORT}
 
-COPY --from=development /home/node/app/ ./app/
-COPY --from=development /home/node/package*.json ./
-RUN npm ci
-CMD [ "node", "app" ]
+CMD ["uvicorn", "src.main:app", "--host=0.0.0.0", "--port=3000"]
+
+# Production
+FROM python:${PYTHON_VERSION}-slim as production
+
+ENV PYTHONDONTWRITEBYTECODE=1
+
+ENV PYTHONUNBUFFERED=1
+
+WORKDIR /app
+
+ARG UID=10001
+RUN adduser \
+  --disabled-password \
+  --gecos "" \
+  --home "/nonexistent" \
+  --shell "/sbin/nologin" \
+  --no-create-home \
+  --uid "${UID}" \
+  appuser
+
+COPY ./requirements.txt /app/requirements.txt
+
+RUN --mount=type=cache,target=/root/.cache/pip \
+  --mount=type=bind,source=requirements.txt,target=/app/requirements.txt \
+  python -m pip install -r /app/requirements.txt
+
+USER appuser
+
+COPY ./src /app/src
+EXPOSE ${PORT}
+
+CMD ["uvicorn", "src.main:app", "--host=0.0.0.0", "--port=3000"]

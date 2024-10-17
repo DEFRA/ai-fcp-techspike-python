@@ -2,11 +2,11 @@
 # to provide dependencies and expose ports for local testing
 
 services:
-  ffc-template-node:
+  ai-fcp-techspike-python:
     build:
       target: development
-    image: ffc-template-node-development
-    container_name: ffc-template-node-development
+    image: ai-fcp-techspike-python-development
+    container_name: ai-fcp-techspike-python-development
     ports:
       - "3000:3000"
       - "9229:9229"
@@ -15,6 +15,6 @@ services:
       - ./package.json:/home/node/package.json
 
 networks:
-  ffc-template-node:
-    name: ffc-template-node
+  ai-fcp-techspike-python:
+    name: ai-fcp-techspike-python
     driver: bridge

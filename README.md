@@ -15,17 +15,17 @@ The script will update the following:
 * `docker-compose.yaml`: update the service name, `image` and `container_name`
 * `docker-compose.test.yaml`: update the service name, `image` and `container_name`
 * `docker-compose.override.yaml`: update the service name, `image` and `container_name`
-* Rename `helm/ffc-template-node`
-* `helm/ffc-template-node/Chart.yaml`: update `description` and `name`
-* `helm/ffc-template-node/values.yaml`: update  `name`, `namespace`, `workstream`, `image`, `containerConfigMap.name`
-* `helm/ffc-template-node/templates/_container.yaml`: update the template name
-* `helm/ffc-template-node/templates/cluster-ip-service.yaml`: update the template name and list parameter of include
-* `helm/ffc-template-node/templates/config-map.yaml`: update the template name and list parameter of include
-* `helm/ffc-template-node/templates/deployment.yaml`: update the template name, list parameter of deployment and container includes
+* Rename `helm/ai-fcp-techspike-python`
+* `helm/ai-fcp-techspike-python/Chart.yaml`: update `description` and `name`
+* `helm/ai-fcp-techspike-python/values.yaml`: update  `name`, `namespace`, `workstream`, `image`, `containerConfigMap.name`
+* `helm/ai-fcp-techspike-python/templates/_container.yaml`: update the template name
+* `helm/ai-fcp-techspike-python/templates/cluster-ip-service.yaml`: update the template name and list parameter of include
+* `helm/ai-fcp-techspike-python/templates/config-map.yaml`: update the template name and list parameter of include
+* `helm/ai-fcp-techspike-python/templates/deployment.yaml`: update the template name, list parameter of deployment and container includes
 
 ### Notes on automated rename
 
-* The Helm chart deployment values in `helm/ffc-template-node/values.yaml` may need updating depending on the resource needs of your microservice
+* The Helm chart deployment values in `helm/ai-fcp-techspike-python/values.yaml` may need updating depending on the resource needs of your microservice
 * The rename is a one-way operation i.e. currently it doesn't allow the name being changed from to be specified
 * There is some validation on the input to try and ensure the rename is successful, however, it is unlikely to stand up to malicious entry
 * Once the rename has been performed the script can be removed from the repo
