@@ -1,5 +1,5 @@
 apiVersion: v2
-description: description-of-project-goes-here
+description: Techspike for testing python deployment
 name: ai-fcp-techspike-python
 # this version is automatically updated in the build pipeline
 version: 1.0.0
