@@ -1,8 +1,8 @@
 from fastapi import APIRouter
 
 router = APIRouter(
-    prefix='/health',
-    tags=['health']
+    prefix='/healthy',
+    tags=['healthy']
 )
 
 @router.get("/", response_description="Check the health of the API")
