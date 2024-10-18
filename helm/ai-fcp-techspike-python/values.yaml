@@ -23,6 +23,10 @@ container:
   resourceTier: M
   port: *port
 
+ingress:
+  endpoint: ai-fcp-techspike-python
+  server: ffc.snd.azure.defra.cloud
+
 livenessProbe:
   path: /healthz
   port: *port
