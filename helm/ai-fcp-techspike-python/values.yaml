@@ -2,8 +2,8 @@
 environment: production
 environmentCode:
 name: ai-fcp-techspike-python
-namespace: ffc-demo
-workstream: ffc-demo
+namespace: ffc-rps-experiment
+workstream: ffc-rps-experiment
 image: ai-fcp-techspike-python
 
 appInsights:
